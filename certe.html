@@ -181,7 +181,7 @@
                                     
                                 
                         
-                     if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
+                                if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
                                   if (k==0)
                                     dist = Math.round((qty - total) / 2);
                                   else
@@ -196,7 +196,14 @@ data.push([DaySand[j][k],dist]);
                     }
 
                 }
-                
+                var oultrycheck = data[lenght-1][0] + data[lenght-2][0];
+                if (oultrycheck<qty*45/100)
+                {
+                    var less = qty*45/100;
+                    for(var d =0;d<less;d++){
+                        data[d][0] -=1;
+                    } 
+                }
                 for (var l = 0; l < data.length; l++) {
                     list.append('<ol>' + data[l][0] + ': ' + data[l][1] + '</ol>');
 
