@@ -197,14 +197,22 @@ data.push([DaySand[j][k],dist]);
 
                 }
                 var oultrycheck = ( data[data.length-1][1] + data[data.length-2][1]);
+            alert(oultrycheck)
+            alert(qty*45/100)
              if (oultrycheck<qty*45/100)
                 {
                     var less =( qty*45/100)-oultrycheck ;
-                    var alt=1;
+                    var alt=0;
                     for(var d =0;d<less;d++){
-                        data[d][1] -=1;
-                        data [data.length-alt][1]+=1;
-                        alt =alt==1?1:2;
+                        if (data[alt][1]>1){
+                            
+                        
+                            data[alt][1] -=1;
+                       
+                        data [data.length-(alt+1)][1]+=1;
+                        }
+                    
+                        alt =alt==0?1:0;
                     } 
                 }
                 for (var l = 0; l < data.length; l++) {
