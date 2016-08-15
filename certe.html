@@ -27,6 +27,10 @@
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
+    .col-xs-6
+    {
+        padding-bottom: 20px;
+    }
 </style>
 
 
@@ -129,15 +133,16 @@
         addDay(daySelection, JSON.parse(JSON.stringify(dayDist)), day);
 
     });
-
+    //Recorre y agrega los sandwichs elegidos
     function addDay(daySand, Daydist, day) {
         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
-
+        //se recorre el grid
         for (var i = 0; i < _arrayData.length; i++) {
             var qty = _arrayData[i].Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
+            //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
                 list.append('<div class="col-xs-6"></div>')
@@ -148,41 +153,47 @@
                 var total = 0;
                 if (qty < 7) {
                     DaySand[0].splice(Math.floor((Math.random() * 2) - 1), 1);
-                    DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1);
-                    DaySand[3].splice(Math.floor((Math.random() * 2) - 1), 1);
+                    DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1); 
                 }
+                //se empieza a recorrer la lista de sandwichs
                 for (var j = 0; j < DaySand.length; j++) {
-                    var dist = 0;
+                    var dist = 0; //distribucion
+                    var countCat= 0;//numero de sand en esta categoria
                     for (var k = 0; k < DaySand[j].length; k++) {
-                        var selected = true;
-                        if (qty <= 5) {
+                         //menos sandwichs que la lista
+                        if (qty <= 6) {
                             dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100));
-                        }     else {
-                            if (j == DaySand.length -1) {
-                              if (k==0)
-                                dist = Math.round((qty - total) / 2);
-                              else
-                                dist=qty-total;
-                            } 
-                            else {
-                                if (selected){
+                        }      else {
 
-                                var ran = Math.floor((Math.random() * 2) - 1);
-                                if (ran==0)
-                                   dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                else
-                                {
-                                    dist = Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                    selected=false;
-                                }
-                                }
-                                else
-                                   dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                            }
+                               var ran = Math.floor((Math.random() * 3) - 1);
+                               if((ran==1))
+                                    {
+                                        
+                                          dist =  Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                                            }
+                                         else if (ran==2)
+                                             
+                                         { dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                                         }
+                                         else
+                                         {
+                                            dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                                         }
+                                    
+                                
                         }
+                     if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
+                                  if (k==0)
+                                    dist = Math.round((qty - total) / 2);
+                                  else
+                                    dist=qty-total;
+                                }
+                        if (dist==0){
+                            dist=1;
+                        
+                        }countCat += dist;
                         total += dist;
-                        data.push([DaySand[j][k],dist]);
-
+data.push([DaySand[j][k],dist]);
                     }
 
                 }
