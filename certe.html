@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- /.row -->
-        <input id="print" type="button" hidden="" value="CHECK">
+        <input id="print" type="button" hidden="" value="print">
     </div>
     <!-- /.container -->
     <div id="grid" class="col-md-12 row"></div>
@@ -196,12 +196,15 @@ data.push([DaySand[j][k],dist]);
                     }
 
                 }
-                var oultrycheck = data[lenght-1][0] + data[lenght-2][0];
-                if (oultrycheck<qty*45/100)
+                var oultrycheck = ( data[data.length-1][1] + data[data.length-2][1]);
+             if (oultrycheck<qty*45/100)
                 {
-                    var less = qty*45/100;
+                    var less =( qty*45/100)-oultrycheck ;
+                    var alt=1;
                     for(var d =0;d<less;d++){
-                        data[d][0] -=1;
+                        data[d][1] -=1;
+                        data [data.length-alt][1]+=1;
+                        alt =alt==1?1:2;
                     } 
                 }
                 for (var l = 0; l < data.length; l++) {
