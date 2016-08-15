@@ -1,0 +1,96 @@
+/* Normal desktop :992px. */
+@media (min-width: 992px) and (max-width: 1169px) {
+.content-icon {
+  padding: 2%;
+}
+.content-icon {
+  width: 10%;
+}
+.content-text {
+  width: 83%;
+}
+.content-text.evenbox {
+  width: 83%;
+}
+.content-text.evenbox {
+  margin-right: 28px;
+}
+.content-box h5 {
+  margin-bottom: 5px;
+  margin-top: 31px;
+}
+.protfolio-content {
+  margin-top: 10px;
+}
+.content-block-inner {
+  margin-bottom: 60px;
+}
+.prot-img-text li {
+  display: inline-block;
+  font-size: 20px;
+  margin-right: 137px;
+}
+.prot-img-text li:last-child {
+  margin-right: 0;
+}
+}
+ 
+/* Tablet desktop :768px. */
+@media (min-width: 768px) and (max-width: 991px) {
+.content-icon {
+  padding: 2%;
+}
+.footer-icons ul li a i {
+  padding: 24% 40%;
+}
+.content-icon {
+  width: 10%;
+}
+.content-text {
+  width: 83%;
+}
+.content-text.evenbox {
+  width: 82%;
+}
+.content-box h5 {
+  margin-top: 13px;
+}
+.content-block-inner {
+  margin-bottom: 0px;
+}
+.prot-img-text li {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 89px;
+}
+.prot-img-text li:last-child {
+  margin-right: 0;
+}
+}
+/* small mobile :320px. */
+@media (max-width: 767px) {
+.section-title {
+  font-size: 24px;
+}
+.content-box h5 {
+  font-size: 18px;
+}
+.prot-img-text li {
+  float: left;
+  font-size: 14px;
+  margin: 0 auto;
+  text-align: center;
+  width: 33%;
+}
+.footer-icons ul li a i {
+  padding: 24% 32%;
+}
+
+}
+/* Large Mobile :480px. */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+.content-box h5 {
+  font-size: 21px;}
+
+}
+ 

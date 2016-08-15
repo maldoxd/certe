@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Certe Sandwichs</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+
+    <link rel="stylesheet" href="css/kendo.common.min.css" />
+    <link rel="stylesheet" href="css/kendo.default.min.css" />
+    <link rel="stylesheet" href="css/kendo.default.mobile.min.css" />
+    <script src="js/jquery.min.js"></script> 
+    <script src="js/kendo.all.min.js"></script>
+</head>
+
+<!-- Custom CSS -->
+<style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+</style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Sandwich Template</h1>
+                <p class="lead">Selecciona dia</p>
+                <select id="DaySelect">
+  <option value="Monday">Monday</option>
+  <option value="Tuesday" selected="">Tuesday</option> 
+  <option value="Wednesday">Wednesday</option> 
+  <option value="Thursday">Thursday</option> 
+  <option value="Friday">Friday</option>  
+</select>
+                <input id="Check" type="button" value="CHECK">
+                <div id="example"></div>
+
+                <div id="grid2"></div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <input id="print" type="button" hidden="" value="CHECK">
+    </div>
+    <!-- /.container -->
+    <div id="grid" class="col-md-12 row"></div>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+<script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+<script src="js/global.js"></script>
+<script>
+    var htContents;
+    var container = document.getElementById('example');
+    $("#grid2").kendoGrid({
+        dataSource: {
+            batch: true,
+            schema: {
+                model: {
+                    fields: {
+                        qty: {},
+                        stage: {},
+                    }
+                }
+            },
+        },
+        toolbar: ["create"],
+        columns: [
+
+            {
+                field: "Cantidad",
+                title: "Cantidad",
+                width: "120px"
+            }, {
+                field: "Stage",
+                title: "Stage",
+                width: "120px"
+            }
+        ],
+        editable: true
+    });
+
+    var data = new Array();
+
+    var arrayName = new Array();
+    $("#Check").click(function() {
+        var list = $("#grid");
+        list.empty();
+        var day = $("#DaySelect").val();
+        var daySelection = Monday;
+        var dayDist = MondayDist;
+        switch (day) {
+            case 'Tuesday':
+                daySelection = Tuesday;
+                dayDist = TuesdayDist;
+                break;
+            case 'Wednesday':
+                daySelection = Wednesday;
+                dayDist = WednesdayDist;
+                break;
+            case 'Thursday':
+                daySelection = Thursday;
+                dayDist = ThursdayDist;
+                break;
+            case 'Friday':
+                daySelection = Friday;
+                dayDist = FridayDist;
+        }
+        addDay(daySelection, JSON.parse(JSON.stringify(dayDist)), day);
+
+    });
+
+    function addDay(daySand, Daydist, day) {
+        var grid = $("#grid2").data("kendoGrid");
+        var _arrayData = grid.dataSource.data();
+
+        for (var i = 0; i < _arrayData.length; i++) {
+            var qty = _arrayData[i].Cantidad;
+            var DaySand = JSON.parse(JSON.stringify(daySand));
+            var data = new Array();
+            if (qty != null) {
+                list = $("#grid");
+                list.append('<div class="col-xs-6"></div>')
+                list = list.find('div').last();
+                var text = _arrayData[i].Stage!=null?_arrayData[i].Stage: "";
+                list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
+                list = list.find('ul').last();
+                var total = 0;
+                if (qty < 7) {
+                    DaySand[0].splice(Math.floor((Math.random() * 2) - 1), 1);
+                    DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1);
+                    DaySand[3].splice(Math.floor((Math.random() * 2) - 1), 1);
+                }
+                for (var j = 0; j < DaySand.length; j++) {
+                    var dist = 0;
+                    for (var k = 0; k < DaySand[j].length; k++) {
+                        var selected = true;
+                        if (qty <= 5) {
+                            dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100));
+                        }     else {
+                            if (j == DaySand.length -1) {
+                              if (k==0)
+                                dist = Math.round((qty - total) / 2);
+                              else
+                                dist=qty-total;
+                            } 
+                            else {
+                                if (selected){
+
+                                var ran = Math.floor((Math.random() * 2) - 1);
+                                if (ran==0)
+                                   dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                                else
+                                {
+                                    dist = Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                                    selected=false;
+                                }
+                                }
+                                else
+                                   dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
+                            }
+                        }
+                        total += dist;
+                        data.push([DaySand[j][k],dist]);
+
+                    }
+
+                }
+                
+                for (var l = 0; l < data.length; l++) {
+                    list.append('<ol>' + data[l][0] + ': ' + data[l][1] + '</ol>');
+
+                }
+            }
+
+            $("#print").show();
+        }
+
+    }
+    $("#print").click(function() {
+
+        $(".container").hide();
+        $("#grid").show;
+        window.print();
+        $(".container").show();
+    });
+</script>
