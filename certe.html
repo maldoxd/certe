@@ -161,9 +161,8 @@
                     var countCat= 0;//numero de sand en esta categoria
                     for (var k = 0; k < DaySand[j].length; k++) {
                          //menos sandwichs que la lista
-                        if (qty <= 6) {
-                            dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100));
-                        }      else {
+    
+                    
 
                                var ran = Math.floor((Math.random() * 3) - 1);
                                if((ran==1))
@@ -181,7 +180,7 @@
                                          }
                                     
                                 
-                        }
+                        
                      if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
                                   if (k==0)
                                     dist = Math.round((qty - total) / 2);
