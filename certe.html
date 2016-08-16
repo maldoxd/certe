@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/printcss.css" rel="stylesheet"> 
 
     <link rel="stylesheet" href="css/kendo.common.min.css" />
     <link rel="stylesheet" href="css/kendo.default.min.css" />
@@ -24,12 +25,19 @@
 <!-- Custom CSS -->
 <style>
     body {
-        padding-top: 70px;
+        
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
+ @media print  
+{
+    div{
+        page-break-inside: avoid;
+    }
+}
     .col-xs-6
-    {
-        padding-bottom: 20px;
+    { 
+    font-size: 18px;
+padding-bottom: 200px;
     }
 </style>
 
@@ -64,7 +72,7 @@
         <input id="print" type="button" hidden="" value="print">
     </div>
     <!-- /.container -->
-    <div id="grid" class="col-md-12 row"></div>
+    <div id="grid" class="col-md-12 row line"></div>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -83,7 +91,9 @@
                 model: {
                     fields: {
                         qty: {},
-                        stage: {},
+                        stage: {}, 
+                        dressed: { type: "boolean" },
+                          ceramic: { type: "boolean" },
                     }
                 }
             },
@@ -99,6 +109,14 @@
                 field: "Stage",
                 title: "Stage",
                 width: "120px"
+            }, {
+                field: "dressed",
+                title: "Undressed",
+                width: "40px"
+            }, {
+                field: "ceramic",
+                title: "Ceramic",
+                width: "40px"
             }
         ],
         editable: true
@@ -145,9 +163,11 @@
             //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
-                list.append('<div class="col-xs-6"></div>')
+                list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
-                var text = _arrayData[i].Stage!=null?_arrayData[i].Stage: "";
+                var Undressed = _arrayData[i].dressed==true?" UNDRESSED":"";
+                var Ceramic = _arrayData[i].dressed==true?" CERAMIC":"";
+                var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" )+Undressed+ Ceramic;
                 list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
                 list = list.find('ul').last();
                 var total = 0;
@@ -159,25 +179,24 @@
                 for (var j = 0; j < DaySand.length; j++) {
                     var dist = 0; //distribucion
                     var countCat= 0;//numero de sand en esta categoria
+                   
                     for (var k = 0; k < DaySand[j].length; k++) {
                          //menos sandwichs que la lista
     
                     
 
                                var ran = Math.floor((Math.random() * 3) - 1);
+                               console.log(ran)
                                if((ran==1))
                                     {
                                         
                                           dist =  Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
                                             }
-                                         else if (ran==2)
+                                         else
                                              
                                          { dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100)) ;
                                          }
-                                         else
-                                         {
-                                            dist = Math.ceil((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                         }
+                                         
                                     
                                 
                         
@@ -192,29 +211,31 @@
                         
                         }countCat += dist;
                         total += dist;
-data.push([DaySand[j][k],dist]);
+                        data.push([DaySand[j][k],dist]);
                     }
 
                 }
                 var oultrycheck = ( data[data.length-1][1] + data[data.length-2][1]);
-            alert(oultrycheck)
-            alert(qty*45/100)
-             if (oultrycheck<qty*45/100)
-                {
-                    var less =( qty*45/100)-oultrycheck ;
-                    var alt=0;
-                    for(var d =0;d<less;d++){
-                        if (data[alt][1]>1){
+             
+             // if ((oultrycheck<qty*45/100)&&(qty>6))
+             //    {
+             //        var less =( qty*45/100)-oultrycheck ;
+             //        var alt=Math.floor((Math.random() *3));
+             //        for(var d =0;d<less;d++){
+             //            if (data[alt][1]>1){
                             
                         
-                            data[alt][1] -=1;
+             //                data[alt][1] -=1;
                        
-                        data [data.length-(alt+1)][1]+=1;
-                        }
+             //            data [data.length-(alt+1)][1]+=1;
+             //            }
+             //            else
+             //                d--;
                     
-                        alt =alt==0?1:0;
-                    } 
-                }
+             //            alt =Math.floor((Math.random() *4))//=alt==0?1:0;
+                        
+             //        } 
+             //    }
                 for (var l = 0; l < data.length; l++) {
                     list.append('<ol>' + data[l][0] + ': ' + data[l][1] + '</ol>');
 
@@ -225,6 +246,25 @@ data.push([DaySand[j][k],dist]);
         }
 
     }
+    function shuffle(array) {
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
     $("#print").click(function() {
 
         $(".container").hide();
