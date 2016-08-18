@@ -166,7 +166,7 @@ padding-bottom: 200px;
                 list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
                 var Undressed = _arrayData[i].dressed==true?" UNDRESSED":"";
-                var Ceramic = _arrayData[i].ceramic==true?" CERAMIC":"";
+                var Ceramic = _arrayData[i].dressed==true?" CERAMIC":"";
                 var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" )+Undressed+ Ceramic;
                 list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
                 list = list.find('ul').last();
