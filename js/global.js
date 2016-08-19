@@ -9,4 +9,3 @@ var ThursdayDist=[20,20,10,50];
 var Friday =[ ['Focaccia'],['Godfather','Cubano'],['Tuna Club','Lobster Roll'],['Turkey & Apple Salad', 'Grilled Breast Chicken']];
 var FridayDist=[10,20,30,40];
 var Week=[Monday,Tuesday];
-var order = [1,2,3,4]

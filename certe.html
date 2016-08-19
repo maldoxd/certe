@@ -150,11 +150,13 @@ padding-bottom: 200px;
                 daySelection = Friday;
                 dayDist = FridayDist;
         }
-        addDay(daySelection, JSON.parse(JSON.stringify(dayDist)), day);
+
+var ordersand2 = [1,2,3,4];
+        addDay(daySelection, JSON.parse(JSON.stringify(dayDist)), day,JSON.parse(JSON.stringify(ordersand2)));
 
     });
     //Recorre y agrega los sandwichs elegidos
-    function addDay(daySand, DayDistr, day) {
+    function addDay(daySand, DayDistr, day, orders) {
         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
         //se recorre el grid
@@ -179,7 +181,7 @@ padding-bottom: 200px;
                 //     DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1); 
                 // }
                 //se empieza a recorrer la lista de sandwichs
-                var arra  = shuffleBoth(DaySandy,Daydistr,order);
+                var arra  = shuffleBoth(DaySandy,Daydistr,orders);
                 var DaySand= arra[0];
                 var Daydist = arra[1];
                 var orderArray = arra[2];
