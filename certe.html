@@ -18,8 +18,10 @@
     <link rel="stylesheet" href="css/kendo.common.min.css" />
     <link rel="stylesheet" href="css/kendo.default.min.css" />
     <link rel="stylesheet" href="css/kendo.default.mobile.min.css" />
+    <link rel="stylesheet" href="cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
     <script src="js/jquery.min.js"></script> 
     <script src="js/kendo.all.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 </head>
 
 <!-- Custom CSS -->
@@ -152,13 +154,13 @@ padding-bottom: 200px;
 
     });
     //Recorre y agrega los sandwichs elegidos
-    function addDay(daySand, Daydist, day) {
+    function addDay(daySand, Daydistr, day) {
         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
         //se recorre el grid
         for (var i = 0; i < _arrayData.length; i++) {
             var qty = _arrayData[i].Cantidad;
-            var DaySand = JSON.parse(JSON.stringify(daySand));
+            var DaySandy = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
             //se filtran las lineas vacias
             if (qty != null) {
@@ -166,57 +168,63 @@ padding-bottom: 200px;
                 list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
                 var Undressed = _arrayData[i].dressed==true?" UNDRESSED":"";
-                var Ceramic = _arrayData[i].dressed==true?" CERAMIC":"";
+                var Ceramic = _arrayData[i].ceramic==true?" CERAMIC":"";
                 var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" )+Undressed+ Ceramic;
                 list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
                 list = list.find('ul').last();
                 var total = 0;
-                if (qty < 7) {
-                    DaySand[0].splice(Math.floor((Math.random() * 2) - 1), 1);
-                    DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1); 
-                }
+                // if (qty < 7) {
+                //     DaySand[0].splice(Math.floor((Math.random() * 2) - 1), 1);
+                //     DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1); 
+                // }
                 //se empieza a recorrer la lista de sandwichs
+                var arra  = shuffleBoth(DaySandy,Daydistr);
+                var DaySand= arra[0];
+                var Daydist = arra[1];
                 for (var j = 0; j < DaySand.length; j++) {
                     var dist = 0; //distribucion
-                    var countCat= 0;//numero de sand en esta categoria
-                   
-                    for (var k = 0; k < DaySand[j].length; k++) {
-                         //menos sandwichs que la lista
-    
-                    
+                   var countCat=0;
+                   if (qty==7) 
+                   {
+                    countCat = DaySand[j].length;
+                   }  else{
+                   countCat = Math.round((qty * Daydist[j]/100));//numero de sand en esta categoria
+               }
+                   var last ="";
+                    for (var k = 0; k < countCat; k++) {
+                         //menos sandwichs que la lista  
+                          var shuffleArra = shuffle(DaySand[j])
+                         if ((last != shuffleArra[0])||(shuffleArra.length==1)){
+                           
+                               dist =1
+                                 total += dist;
+                       // var sandtoAdd= { name:DaySand[j][k], qty: dist, }
+                             if (total>qty)
+                                dist=0;
+                            if (dist>0){
+                                   var result = $.grep(data, function(e){ return e.name == shuffleArra[0]; });
+                                   if (result.length == 0) {
+                                       data.push({name:shuffleArra[0],qty:dist});
+                                    }   else {
+                                      result[0].qty+=dist;
+                                    }
+                           }
+                           }
+                           else
+                           {
+                                k--;
 
-                               var ran = Math.floor((Math.random() * 3) - 1);
-                               console.log(ran)
-                               if((ran==1))
-                                    {
-                                        
-                                          dist =  Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                            }
-                                         else
-                                             
-                                         { dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                         }
-                                         
-                                    
-                                
-                        
-                                if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
-                                  if (k==0)
-                                    dist = Math.round((qty - total) / 2);
-                                  else
-                                    dist=qty-total;
-                                }
-                        if (dist==0){
-                            dist=1;
-                        
-                        }countCat += dist;
-                        total += dist;
-                        data.push([DaySand[j][k],dist]);
+                           }
+                            last=shuffleArra[0];
+
+                      
                     }
 
                 }
-                var oultrycheck = ( data[data.length-1][1] + data[data.length-2][1]);
-             
+                if (total<qty)
+                {
+                    data[0].qty+=qty-total;
+                }
              // if ((oultrycheck<qty*45/100)&&(qty>6))
              //    {
              //        var less =( qty*45/100)-oultrycheck ;
@@ -237,7 +245,7 @@ padding-bottom: 200px;
              //        } 
              //    }
                 for (var l = 0; l < data.length; l++) {
-                    list.append('<ol>' + data[l][0] + ': ' + data[l][1] + '</ol>');
+                    list.append('<ol>' + data[l].name + ': ' + data[l].qty + '</ol>');
 
                 }
             }
@@ -262,8 +270,30 @@ padding-bottom: 200px;
         array[counter] = array[index];
         array[index] = temp;
     }
+        return array;
+    
+}
+ function shuffleBoth(array,array2) {
+    let counter = array.length-1;
 
-    return array;
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+        let tempt = array2[counter];
+        array2[counter] = array2[index];
+        array2[index] = tempt; 
+    }
+return [array,array2];
+    
 }
     $("#print").click(function() {
 
