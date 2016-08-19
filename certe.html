@@ -206,7 +206,7 @@ padding-bottom: 200px;
                             if (dist>0){
                                    var result = $.grep(data, function(e){ return e.name == shuffleArra[0]; });
                                    if (result.length == 0) {
-                                       data.push({name:shuffleArra[0],qty:idst, cat:orderArray[j]});
+                                       data.push({name:shuffleArra[0],qty:dist, cat:orderArray[j]});
                                     }   else {
                                       result[0].qty+=dist;
                                     }
