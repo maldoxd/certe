@@ -156,7 +156,7 @@ var ordersand2 = [1,2,3,4];
 
     });
     //Recorre y agrega los sandwichs elegidos
-    function addDay(daySand, DayDistr, day, orders) {
+    function addDay(daySand, DayDistr, day, orders2) {
         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
         //se recorre el grid
@@ -164,6 +164,7 @@ var ordersand2 = [1,2,3,4];
             var qty = _arrayData[i].Cantidad;
             var DaySandy = JSON.parse(JSON.stringify(daySand));
             var Daydistr = JSON.parse(JSON.stringify(DayDistr));
+            var orders = JSON.parse(JSON.stringify(orders2));
             var data = new Array();
             //se filtran las lineas vacias
             if (qty != null) {
@@ -256,8 +257,9 @@ var ordersand2 = [1,2,3,4];
             data.sort(function(a, b) {
                  return parseFloat(a.cat) - parseFloat(b.cat);
                 });
+                
                 for (var l = 0; l < data.length; l++) {
-                    list.append('<ol>' + data[l].name + ': ' + data[l].qty + '</ol>');
+                    list.append('<ol>' + data[l].name + ': ' + data[l].qty +' </ol>');
 
                 }
             }
