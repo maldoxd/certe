@@ -92,8 +92,8 @@ padding-bottom: 200px;
                     fields: {
                         qty: {},
                         stage: {}, 
-                        dressed: { type: "boolean" },
-                          ceramic: { type: "boolean" },
+                        time: {}, 
+                       
                     }
                 }
             },
@@ -109,15 +109,11 @@ padding-bottom: 200px;
                 field: "Stage",
                 title: "Stage",
                 width: "120px"
-            }, {
-                field: "dressed",
-                title: "Undressed",
-                width: "40px"
-            }, {
-                field: "ceramic",
-                title: "Ceramic",
-                width: "40px"
-            }
+            },, {
+                field: "Time",
+                title: "Time",
+                width: "120px"
+            }, 
         ],
         editable: true
     });
@@ -131,24 +127,7 @@ padding-bottom: 200px;
         var day = $("#DaySelect").val();
         var daySelection = Monday;
         var dayDist = MondayDist;
-        switch (day) {
-            case 'Tuesday':
-                daySelection = Tuesday;
-                dayDist = TuesdayDist;
-                break;
-            case 'Wednesday':
-                daySelection = Wednesday;
-                dayDist = WednesdayDist;
-                break;
-            case 'Thursday':
-                daySelection = Thursday;
-                dayDist = ThursdayDist;
-                break;
-            case 'Friday':
-                daySelection = Friday;
-                dayDist = FridayDist;
-        }
-        addDay(daySelection, JSON.parse(JSON.stringify(dayDist)), day);
+        addDay(midEastern, JSON.parse(JSON.stringify(midEasternDist)), day);
 
     });
     //Recorre y agrega los sandwichs elegidos
@@ -163,81 +142,23 @@ padding-bottom: 200px;
             //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
-                list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
+                list.append('<div class="col-xs-12 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
-                var Undressed = _arrayData[i].dressed==true?" UNDRESSED":"";
-                var Ceramic = _arrayData[i].dressed==true?" CERAMIC":"";
-                var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" )+Undressed+ Ceramic;
+               
+                var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" );
                 list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
                 list = list.find('ul').last();
                 var total = 0;
-                if (qty < 7) {
-                    DaySand[0].splice(Math.floor((Math.random() * 2) - 1), 1);
-                    DaySand[2].splice(Math.floor((Math.random() * 2) - 1), 1); 
-                }
                 //se empieza a recorrer la lista de sandwichs
                 for (var j = 0; j < DaySand.length; j++) {
-                    var dist = 0; //distribucion
-                    var countCat= 0;//numero de sand en esta categoria
-                   
-                    for (var k = 0; k < DaySand[j].length; k++) {
-                         //menos sandwichs que la lista
-    
+                    var dist = Math.round(Daydist[j]*qty/100); //distribucion
+                    data.push([DaySand[j],dist]);
                     
-
-                               var ran = Math.floor((Math.random() * 3) - 1);
-                               console.log(ran)
-                               if((ran==1))
-                                    {
-                                        
-                                          dist =  Math.floor((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                            }
-                                         else
-                                             
-                                         { dist = Math.round((qty * Daydist[j] / DaySand[j].length / 100)) ;
-                                         }
-                                         
-                                    
-                                
-                        
-                                if (j == DaySand.length -1) {//los ultimos que son la lista de poultry se le ponen el resto
-                                  if (k==0)
-                                    dist = Math.round((qty - total) / 2);
-                                  else
-                                    dist=qty-total;
-                                }
-                        if (dist==0){
-                            dist=1;
-                        
-                        }countCat += dist;
-                        total += dist;
-                        data.push([DaySand[j][k],dist]);
-                    }
 
                 }
-                var oultrycheck = ( data[data.length-1][1] + data[data.length-2][1]);
-             
-             // if ((oultrycheck<qty*45/100)&&(qty>6))
-             //    {
-             //        var less =( qty*45/100)-oultrycheck ;
-             //        var alt=Math.floor((Math.random() *3));
-             //        for(var d =0;d<less;d++){
-             //            if (data[alt][1]>1){
-                            
-                        
-             //                data[alt][1] -=1;
-                       
-             //            data [data.length-(alt+1)][1]+=1;
-             //            }
-             //            else
-             //                d--;
-                    
-             //            alt =Math.floor((Math.random() *4))//=alt==0?1:0;
-                        
-             //        } 
-             //    }
+               
                 for (var l = 0; l < data.length; l++) {
-                    list.append('<ol>' + data[l][0] + ': ' + data[l][1] + '</ol>');
+                    list.append('<ol>' day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + '</ol>');
 
                 }
             }
