@@ -82,6 +82,11 @@ padding-bottom: 200px;
 <script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script src="js/global.js"></script>
 <script>
+var midEasternPlat=[1,1,1,1,0,0,0,0,0]
+var midEasternDist =[100,100,100,100,50,50,50,75,75];
+
+var dispName=["Disp", "TIN"];
+var ceramicName=["Ceramic", "Metal"];
     var htContents;
     var container = document.getElementById('example');
     $("#grid2").kendoGrid({
@@ -93,6 +98,7 @@ padding-bottom: 200px;
                         qty: {},
                         stage: {}, 
                         time: {}, 
+                        ceramic: {type:"boolean"}, 
                        
                     }
                 }
@@ -113,6 +119,10 @@ padding-bottom: 200px;
                 field: "Time",
                 title: "Time",
                 width: "120px"
+            },  {
+                field: "ceramic",
+                title: "Ceramic",
+                width: "120px"
             }, 
         ],
         editable: true
@@ -127,7 +137,7 @@ padding-bottom: 200px;
         var day = $("#DaySelect").val();
         var daySelection = Monday;
         var dayDist = MondayDist;
-        addDay(midEastern, JSON.parse(JSON.stringify(midEasternDist)), day);
+        addDay(midEastern, JSON.parse(JSON.stringify(midEasternDist)), day, midEasternPlat);
 
     });
     //Recorre y agrega los sandwichs elegidos
@@ -139,6 +149,7 @@ padding-bottom: 200px;
             var qty = _arrayData[i].Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
+            var type = _arrayData[i].ceramic == 1? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
             //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
@@ -158,7 +169,7 @@ padding-bottom: 200px;
                 }
                
                 for (var l = 0; l < data.length; l++) {
-                    list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + '</ol>');
+                    list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' </ol>');
 
                 }
             }
