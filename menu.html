@@ -49,7 +49,7 @@ padding-bottom: 200px;
 
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container"    >
 
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -81,10 +81,21 @@ padding-bottom: 200px;
 </html>
 <script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script src="js/global.js"></script>
-<script>
-var midEasternPlat=[1,1,1,1,0,0,0,0,0]
+<script> 
+var Monday =[['Mozzarella Caprese', 'Pea Falafel'],['Rare Roast Beef','Oaxacan Torta'],['Tuna'],['Turkey Tower', 'Chicken Caesar']];
+var MondayDist=[20,20,10,50];
+var Tuesday =[ ['ALT', 'Portobello Mushroom'],['Shredded Sirloin Banh MI','Ham & Brie'],['Tuna'],['Smoked Turkey', 'Buffalo Chicken']];
+var TuesdayDist=[20,20,10,50];
+var Wednesday =[ ['Roasted Asparagus', 'Vegelicious'],['Grilled Sliced Sirloin','Brooklyn Pastrami','Godfather'],['Tuna'],['Special Turkey', 'Bangkok Chicken']];
+var WednesdayDist=[20,20,10,50];
+var Thursday =[ ['Southwest Veggie','Pea Falafel'],['Corned Beef', 'B.A.T'],['Tuna'],['Turkey Tower', 'Souther Fried Chicken Breast']];
+var ThursdayDist=[20,20,10,50];
+var Friday =[ ['Focaccia'],['Godfather','Cubano'],['Tuna Club','Lobster Roll'],['Turkey & Apple Salad', 'Grilled Breast Chicken']];
+var FridayDist=[10,20,30,40];
+var Week=[Monday,Tuesday];
+var midEastern=["Chicken Kebobs", "Beef Kebobs", " Shrimp Kebobs", "Vegetable Kebobs", "Israeli Cous Cous","Grilled Vegetables","Cucumber and Chick Pea Salad", "Humus & Chips", "Slice Fruits"];
+var midEasternPlat=[1,1,1,1,0,0,0,0,0];
 var midEasternDist =[100,100,100,100,50,50,50,75,75];
-
 var dispName=["Disp", "TIN"];
 var ceramicName=["Ceramic", "Metal"];
     var htContents;
@@ -149,7 +160,7 @@ var ceramicName=["Ceramic", "Metal"];
             var qty = _arrayData[i].Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
-            var type = _arrayData[i].ceramic == 1? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
+            var type = _arrayData[i].ceramic == 0? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
             //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
@@ -157,7 +168,7 @@ var ceramicName=["Ceramic", "Metal"];
                 list = list.find('div').last();
                
                 var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" );
-                list.append('<ul><b>' + qty + 'pp ' + day + ': ' + text + '</b></ul>');
+                list.append('<ul></ul>');
                 list = list.find('ul').last();
                 var total = 0;
                 //se empieza a recorrer la lista de sandwichs
@@ -169,7 +180,7 @@ var ceramicName=["Ceramic", "Metal"];
                 }
                
                 for (var l = 0; l < data.length; l++) {
-                    list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' </ol>');
+                    list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' ' + text+' </ol>');
 
                 }
             }

@@ -10,7 +10,7 @@ var Friday =[ ['Focaccia'],['Godfather','Cubano'],['Tuna Club','Lobster Roll'],[
 var FridayDist=[10,20,30,40];
 var Week=[Monday,Tuesday];
 var midEastern=["Chicken Kebobs", "Beef Kebobs", " Shrimp Kebobs", "Vegetable Kebobs", "Israeli Cous Cous","Grilled Vegetables","Cucumber and Chick Pea Salad", "Humus & Chips", "Slice Fruits"]
-var midEasternPlat=[1,1,1,1,0,0,0,0,0]
+var midEasternPlat=[1,1,1,1,0,0,0,0,0];
 var midEasternDist =[100,100,100,100,50,50,50,75,75];
 var dispName=["Disp", "TIN"];
 var ceramicName["Ceramic", "Metal"];
