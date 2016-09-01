@@ -13,4 +13,4 @@ var midEastern=["Chicken Kebobs", "Beef Kebobs", " Shrimp Kebobs", "Vegetable Ke
 var midEasternPlat=[1,1,1,1,0,0,0,0,0];
 var midEasternDist =[100,100,100,100,50,50,50,75,75];
 var dispName=["Disp", "TIN"];
-var ceramicName["Ceramic", "Metal"];
+var ceramicName=["Ceramic", "Metal"];

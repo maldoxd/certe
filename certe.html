@@ -160,6 +160,8 @@ var ordersand2 = [1,2,3,4];
         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
         //se recorre el grid
+        var sandwichTotals = JSON.parse(JSON.stringify(daySand));
+        var totalA=new Array();
         for (var i = 0; i < _arrayData.length; i++) {
             var qty = _arrayData[i].Cantidad;
             var DaySandy = JSON.parse(JSON.stringify(daySand));
@@ -230,25 +232,6 @@ var ordersand2 = [1,2,3,4];
                 {
                     data[0].qty+=qty-total;
                 }
-             // if ((oultrycheck<qty*45/100)&&(qty>6))
-             //    {
-             //        var less =( qty*45/100)-oultrycheck ;
-             //        var alt=Math.floor((Math.random() *3));
-             //        for(var d =0;d<less;d++){
-             //            if (data[alt][1]>1){
-                            
-                        
-             //                data[alt][1] -=1;
-                       
-             //            data [data.length-(alt+1)][1]+=1;
-             //            }
-             //            else
-             //                d--;
-                    
-             //            alt =Math.floor((Math.random() *4))//=alt==0?1:0;
-                        
-             //        } 
-             //   } 
              data.sort(function(a, b) {
                  return  (a.name> b.name) - (a.name < b.name);
             
@@ -260,11 +243,33 @@ var ordersand2 = [1,2,3,4];
                 
                 for (var l = 0; l < data.length; l++) {
                     list.append('<ol>' + data[l].name + ': ' + data[l].qty +' </ol>');
-
+                    var result = $.grep(totalA, function(e){ return e.name == data[l].name; });
+                                   if (result.length == 0) {
+                                        
+                                       totalA.push(data[l]);
+                                    }
+                                    else
+                                    {
+                                        
+                                        result[0].qty += data[l].qty;
+                                    }
                 }
+               
             }
 
             $("#print").show();
+        }
+         list = $("#grid");
+              list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
+                list = list.find('div').last();
+                
+                list.append('<ul><b>TOTALES:</b></ul>');
+                list = list.find('ul').last();
+            
+        for(var i=0;i<totalA.length;i++)
+        {
+            
+            list.append('<ol>' + totalA[i].name + ': ' + totalA[i].qty +' </ol>');
         }
 
     }

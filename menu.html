@@ -160,7 +160,6 @@ var ceramicName=["Ceramic", "Metal"];
             var qty = _arrayData[i].Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
-            var type = _arrayData[i].ceramic == 0? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
             //se filtran las lineas vacias
             if (qty != null) {
                 list = $("#grid");
@@ -180,6 +179,8 @@ var ceramicName=["Ceramic", "Metal"];
                 }
                
                 for (var l = 0; l < data.length; l++) {
+                    var type = _arrayData[i].ceramic == 0? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
+            
                     list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' ' + text+' </ol>');
 
                 }
