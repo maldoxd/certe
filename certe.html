@@ -162,6 +162,7 @@ var ordersand2 = [1,2,3,4];
         //se recorre el grid
         var sandwichTotals = JSON.parse(JSON.stringify(daySand));
         var totalA=new Array();
+        var totalU=new Array();
         for (var i = 0; i < _arrayData.length; i++) {
             var qty = _arrayData[i].Cantidad;
             var DaySandy = JSON.parse(JSON.stringify(daySand));
@@ -211,7 +212,7 @@ var ordersand2 = [1,2,3,4];
                             if (dist>0){
                                    var result = $.grep(data, function(e){ return e.name == shuffleArra[0]; });
                                    if (result.length == 0) {
-                                       data.push({name:shuffleArra[0],qty:dist, cat:orderArray[j]});
+                                       data.push({name:shuffleArra[0],qty:dist, cat:orderArray[j], dressed:_arrayData[i].dressed});
                                     }   else {
                                       result[0].qty+=dist;
                                     }
@@ -243,6 +244,8 @@ var ordersand2 = [1,2,3,4];
                 
                 for (var l = 0; l < data.length; l++) {
                     list.append('<ol>' + data[l].name + ': ' + data[l].qty +' </ol>');
+                    if (!data[l].dressed)
+                    {
                     var result = $.grep(totalA, function(e){ return e.name == data[l].name; });
                                    if (result.length == 0) {
                                         
@@ -253,17 +256,29 @@ var ordersand2 = [1,2,3,4];
                                         
                                         result[0].qty += data[l].qty;
                                     }
+                    }else{
+                                     var resultUndressed = $.grep(totalU, function(e){ return e.name == data[l].name; });
+                                   if (resultUndressed.length == 0) {
+                                        
+                                       totalU.push(data[l]);
+                                    }
+                                    else
+                                    {
+                                        
+                                        resultUndressed[0].qty += data[l].qty;
+                                    }}
                 }
                
             }
 
             $("#print").show();
         }
+        if(totalA.length>0){
          list = $("#grid");
               list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
                 
-                list.append('<ul><b>TOTALES:</b></ul>');
+                list.append('<ul><b>TOTALES Dressed:</b></ul>');
                 list = list.find('ul').last();
             
         for(var i=0;i<totalA.length;i++)
@@ -271,7 +286,21 @@ var ordersand2 = [1,2,3,4];
             
             list.append('<ol>' + totalA[i].name + ': ' + totalA[i].qty +' </ol>');
         }
-
+        }
+        if(totalU.length>0){
+        list = $("#grid");
+              list.append('<div class="col-xs-6 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
+                list = list.find('div').last();
+                
+                list.append('<ul><b>TOTALES Undressed:</b></ul>');
+                list = list.find('ul').last();
+            
+        for(var i=0;i<totalU.length;i++)
+        {
+            
+            list.append('<ol>' + totalU[i].name + ': ' + totalU[i].qty +' </ol>');
+        }
+}
     }
     function shuffle(array) {
     let counter = array.length;
