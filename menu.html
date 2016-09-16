@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/kendo.default.mobile.min.css" />
     <script src="js/jquery.min.js"></script> 
     <script src="js/kendo.all.min.js"></script>
+<script src="js/global.js"></script>
 </head>
 
 <!-- Custom CSS -->
@@ -34,9 +35,13 @@
         page-break-inside: avoid;
     }
 }
+.ol {
+    padding-bottom:15px;
+    font-size:32px !important;
+}
     .col-xs-6
     { 
-    font-size: 18px;
+    font-size: 22px;
 padding-bottom: 200px;
     }
 </style>
@@ -78,26 +83,9 @@ padding-bottom: 200px;
 
 </body>
 
-</html>
-<script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
-<script src="js/global.js"></script>
+</html> 
 <script> 
-var Monday =[['Mozzarella Caprese', 'Pea Falafel'],['Rare Roast Beef','Oaxacan Torta'],['Tuna'],['Turkey Tower', 'Chicken Caesar']];
-var MondayDist=[20,20,10,50];
-var Tuesday =[ ['ALT', 'Portobello Mushroom'],['Shredded Sirloin Banh MI','Ham & Brie'],['Tuna'],['Smoked Turkey', 'Buffalo Chicken']];
-var TuesdayDist=[20,20,10,50];
-var Wednesday =[ ['Roasted Asparagus', 'Vegelicious'],['Grilled Sliced Sirloin','Brooklyn Pastrami','Godfather'],['Tuna'],['Special Turkey', 'Bangkok Chicken']];
-var WednesdayDist=[20,20,10,50];
-var Thursday =[ ['Southwest Veggie','Pea Falafel'],['Corned Beef', 'B.A.T'],['Tuna'],['Turkey Tower', 'Souther Fried Chicken Breast']];
-var ThursdayDist=[20,20,10,50];
-var Friday =[ ['Focaccia'],['Godfather','Cubano'],['Tuna Club','Lobster Roll'],['Turkey & Apple Salad', 'Grilled Breast Chicken']];
-var FridayDist=[10,20,30,40];
-var Week=[Monday,Tuesday];
-var midEastern=["Chicken Kebobs", "Beef Kebobs", " Shrimp Kebobs", "Vegetable Kebobs", "Israeli Cous Cous","Grilled Vegetables","Cucumber and Chick Pea Salad", "Humus & Chips", "Slice Fruits"];
-var midEasternPlat=[1,1,1,1,0,0,0,0,0];
-var midEasternDist =[100,100,100,100,50,50,50,75,75];
-var dispName=["Disp", "TIN"];
-var ceramicName=["Ceramic", "Metal"];
+
     var htContents;
     var container = document.getElementById('example');
     $("#grid2").kendoGrid({
@@ -181,7 +169,7 @@ var ceramicName=["Ceramic", "Metal"];
                 for (var l = 0; l < data.length; l++) {
                     var type = _arrayData[i].ceramic == 0? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
             
-                    list.append('<ol>' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' ' + text+' </ol>');
+                    list.append('<ol style="font-size:32px; padding-bottom:20px">' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' ' + text+' </ol>');
 
                 }
             }
