@@ -98,14 +98,16 @@ padding-bottom: 200px;
                         stage: {}, 
                         time: {}, 
                         ceramic: {type:"boolean"}, 
-                       
+                        platter: { defaultValue: { value: "0", text: "Middle East" } },
                     }
                 }
             },
         },
         toolbar: ["create"],
         columns: [
-
+           { field: "platter", title: "Platte", width: "180px", editor: categoryDropDownEditor, template: "#=platter.text#" },
+                    
+          
             {
                 field: "Cantidad",
                 title: "Cantidad",
@@ -122,11 +124,23 @@ padding-bottom: 200px;
                 field: "ceramic",
                 title: "Ceramic",
                 width: "120px"
-            }, 
+            },     { command: "destroy", title: "&nbsp;", width: 150 
+            }
         ],
         editable: true
     });
-
+ function categoryDropDownEditor(container, options) {
+            $('<input required name="' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                   
+                     dataSource: {
+                        data: plates
+                    },
+                    dataTextField: "text", suggest: true,
+                    dataValueField: "value",
+                });
+        }   
     var data = new Array();
 
     var arrayName = new Array();
@@ -136,16 +150,20 @@ padding-bottom: 200px;
         var day = $("#DaySelect").val();
         var daySelection = Monday;
         var dayDist = MondayDist;
-        addDay(midEastern, JSON.parse(JSON.stringify(midEasternDist)), day, midEasternPlat);
-
-    });
-    //Recorre y agrega los sandwichs elegidos
-    function addDay(daySand, Daydist, day) {
-        var grid = $("#grid2").data("kendoGrid");
+         var grid = $("#grid2").data("kendoGrid");
         var _arrayData = grid.dataSource.data();
         //se recorre el grid
         for (var i = 0; i < _arrayData.length; i++) {
-            var qty = _arrayData[i].Cantidad;
+            var optionPlate = platerrs[_arrayData[i].platter.value];
+             addDay(optionPlate[0], JSON.parse(JSON.stringify(optionPlate[1])), day, optionPlate[2], _arrayData[i]);
+        }
+        $("#print").show();
+
+    });
+    //Recorre y agrega los sandwichs elegidos
+    function addDay(daySand, Daydist, day, dayPlat,line) {
+        
+            var qty =line.Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
             var data = new Array();
             //se filtran las lineas vacias
@@ -154,7 +172,7 @@ padding-bottom: 200px;
                 list.append('<div class="col-xs-12 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
                
-                var text = (_arrayData[i].Stage!=null?_arrayData[i].Stage: "" );
+                var text = (line.Stage!=null?line.Stage: "" );
                 list.append('<ul></ul>');
                 list = list.find('ul').last();
                 var total = 0;
@@ -167,15 +185,15 @@ padding-bottom: 200px;
                 }
                
                 for (var l = 0; l < data.length; l++) {
-                    var type = _arrayData[i].ceramic == 0? dispName[midEasternPlat[i]]:ceramicName[midEasternPlat[i]];
+                    var type = line.ceramic == 0? dispName[dayPlat[l]]:ceramicName[dayPlat[l]];
             
-                    list.append('<ol style="font-size:32px; padding-bottom:20px">' +day + " " + _arrayData[i].Time + " "+ data[l][0] + ': ' + data[l][1] + ' ' + type +' ' + text+' </ol>');
+                    list.append('<ol style="font-size:24px; padding-bottom:20px">' +day + " - " + line.Time + " - "+ data[l][0] + ': ' + data[l][1] + ' - ' + type +' - ' + text.toUpperCase()+' </ol>');
 
                 }
             }
 
-            $("#print").show();
-        }
+           
+        
 
     }
     function shuffle(array) {

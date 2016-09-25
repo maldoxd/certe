@@ -26,5 +26,7 @@ var mxfa=[mxf,mxfd,mxfp];
 var cock1=["Cubed fruit & Cheese","Crudite","Spiced Nuts","Cheese Straws","Chips & Dips"];
 var cock1d=[50,50,50,50,50];
 var cock1p=[0,0,0,0,0];
-var cock1a=[cock1,cock1d,cock1p];
-var plates=[midEastera,mxfa,cock1a,apa];
+var cock1a=[cock1,cock1d,cock1p];  
+var plates=[ {text: "Middle East", value:0},{text: "Mexican Fiesta", value:1},{text: "Cocktail 1", value:2},
+{text: "Asian Price", value:3}];
+var platerrs=[midEastera,mxfa,cock1a,apa];
