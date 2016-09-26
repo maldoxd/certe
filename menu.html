@@ -168,6 +168,7 @@ padding-bottom: 200px;
             var data = new Array();
             //se filtran las lineas vacias
             if (qty != null) {
+            	   
                 list = $("#grid");
                 list.append('<div class="col-xs-12 .always-pba  .avoid-pbi  .always-page-break-after quad"></div>')
                 list = list.find('div').last();
@@ -179,7 +180,7 @@ padding-bottom: 200px;
                 //se empieza a recorrer la lista de sandwichs
                 for (var j = 0; j < DaySand.length; j++) {
                     var dist =Math.round(Daydist[j]*qty/100); //distribucion
-                    data.push([DaySand[j],dist]);
+                   dist=dist<5?5:dist; data.push([DaySand[j],dist]);
                     
 
                 }
