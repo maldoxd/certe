@@ -19,9 +19,9 @@ var ap= ["Five spiced chicken paillard","Salmon w/ Soy Ginger Glaze","Soba Noodl
 var apd=[50,50,50,50,200,200,75,75];
 var app=[1,1,0,1,0,0,0,0];
 var apa=[ap,apd,app];
-var mxf=["Chicken Fajita","Ground Beef Taco","Vegetable Chile","Tossed Salad","Tortilla Chips","Churros with dulce de leche"];
-var mxfd=[50,50,50,75,75,75];
-var mxfp=[0,1,1,0,0,0];
+var mxf=["Grated cheese/Shredded lettuce/Dicced tomatoes/Corn salsa/Black bean/Salsa picante / Guacamole / Sour Cream","Chicken Fajita","Ground Beef Taco","Vegetable Chile","Rice & Beans","Tossed Salad","Tortilla Chips","Churros with dulce de leche"];
+var mxfd=[100,50,50,50,50,75,75,75];
+var mxfp=[0,1,1,1,1,0,0,0];
 var mxfa=[mxf,mxfd,mxfp];
 var cock1=["Cubed fruit & Cheese","Crudite","Spiced Nuts","Cheese Straws","Chips & Dips"];
 var cock1d=[50,50,50,50,50];
@@ -31,6 +31,10 @@ var egg=["Scrambled eggs",".               .                pcs","Home Fries","T
 var eggd=[100,100,300,100];
 var eggp=[1,1,1,1];
 var egga=[egg,eggd,eggp];
+var chick=["                           ","Basmati Rice","                   ","    MX     ","Sliced fruits","Cookies and brownies"];
+var chickd=[100,75,75,75,50,50];
+var chickp=[1,1,0,0,0,0];
+var chicka=[chick,chickd,chickp];
 var plates=[ {text: "Middle East", value:0},{text: "Mexican Fiesta", value:1},{text: "Cocktail 1", value:2},
-{text: "Asian Price", value:3},{text:"Scrambled egss",value:4}];
-var platerrs=[midEastera,mxfa,cock1a,apa,egga];
+{text: "Asian Price", value:3},{text:"Scrambled egss",value:4},{text:"Chicken price",value:5}];
+var platerrs=[midEastera,mxfa,cock1a,apa,egga,chicka];
