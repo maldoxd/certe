@@ -155,13 +155,13 @@ padding-bottom: 200px;
         //se recorre el grid
         for (var i = 0; i < _arrayData.length; i++) {
             var optionPlate = platerrs[_arrayData[i].platter.value];
-             addDay(optionPlate[0], JSON.parse(JSON.stringify(optionPlate[1])), day, optionPlate[2], _arrayData[i]);
+             addDay(optionPlate[0], JSON.parse(JSON.stringify(optionPlate[1])), day, optionPlate[2], _arrayData[i], optionPlate[3]);
         }
         $("#print").show();
 
     });
     //Recorre y agrega los sandwichs elegidos
-    function addDay(daySand, Daydist, day, dayPlat,line) {
+    function addDay(daySand, Daydist, day, dayPlat,line,dayrel) {
         
             var qty =line.Cantidad;
             var DaySand = JSON.parse(JSON.stringify(daySand));
@@ -187,8 +187,8 @@ padding-bottom: 200px;
                
                 for (var l = 0; l < data.length; l++) {
                     var type = line.ceramic == 0? dispName[dayPlat[l]]:ceramicName[dayPlat[l]];
-            
-                    list.append('<ol style="font-size:24px; padding-bottom:20px">' +day + " - " + line.Time + " - "+ data[l][0] + ': ' + data[l][1] + ' - ' + type +' - ' + text.toUpperCase()+' </ol>');
+                    
+                    list.append('<ol style="font-size:24px; padding-bottom:20px">' +day + " - " + line.Time + " - "+ data[l][0] + ': ' + data[l][1] + ' ' + relName[dayrel[l]] + ' - ' + type +' - ' + text.toUpperCase()+' </ol>');
 
                 }
             }
